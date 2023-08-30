@@ -6,7 +6,7 @@ class Users{
 
     // Fetch all users
     fetchUsers(req, res){
-        const query = `SELECT userID, firstName, lastName, gender, userDOB, emailAdd, profileUrl FROM Users`
+        const query = `SELECT userID, firstName, lastName, gender, userDOB, emailAdd, profileUrl, userRole FROM Users`
 
         db.query(query, (err, results) =>{
             if(err) throw err
@@ -17,8 +17,9 @@ class Users{
         })
     }
 
+    // fetch single user
     fetchUser(req, res){
-        const query = `SELECT userID, firstName, lastName, gender, userDOB, emailAdd, profileUrl FROM Users WHERE userID = ?`
+        const query = `SELECT userID, firstName, lastName, gender, userDOB, emailAdd, profileUrl, userRole FROM Users WHERE userID = ?`
 
         const { userID } = req.params
 
@@ -46,7 +47,7 @@ class Users{
         })
     }
 
-    // Add a user
+    // Add a user (register - signin)
     async addUser(req, res){
         
         const data = req.body
@@ -73,6 +74,27 @@ class Users{
                 status: res.statusCode,
                 result,
                 msg: 'User has been registered'
+            })
+        })
+    }
+
+    // Login 
+
+    // Update a user
+
+    updateUser(req, res){
+        const data = req.body
+
+        if(data.userPass){
+            data.userPass = hashSync(data.userPass, 10)
+        }
+        const query = `UPDATE Users SET ? WHERE userID = ?`
+
+        db.query(query, [data], (err) =>{
+            if(err) throw err
+            res.json({
+                status: res.statusCode,
+                msg: 'User has been successfully updated.'
             })
         })
     }
