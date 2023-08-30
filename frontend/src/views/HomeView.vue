@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Navbar/>
     <section>
       <h1 class="headings">STORYTIME</h1>
       <div>
@@ -73,8 +74,12 @@
 </template>
 
 <script>
+import Navbar from '@/components/NavbarComp.vue'
 
 export default {
+  components:{
+    Navbar
+  },
   computed:{
     bmxBikes(){
       return this.$store.state.bmxBikes

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <Navbar/>
         <h1>Products</h1>
         <div class="container">
             <div class="row">
@@ -20,8 +21,12 @@
 
 <script>
 // import { mapActions, mapMutations, mapState } from 'vuex';
+import Navbar from '@/components/NavbarComp.vue'
 
     export default {
+        components:{
+            Navbar
+        },
         computed:{
             bmxBikes(){
                 return this.$store.state.bmxBikes
