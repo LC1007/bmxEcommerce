@@ -2,7 +2,7 @@ const express = require('express')
 const routes = express()
 const { products, users } = require('../model')
 const bodyParser = require('body-parser')
-const { authorize } = require('../middleware/AuthorizeUser')
+const { authorize } = require('../middleware/AuthUser')
 const path = require('path')
 
 // Fetch all products
