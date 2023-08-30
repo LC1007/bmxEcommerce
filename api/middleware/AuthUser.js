@@ -9,6 +9,21 @@ function createToken(user){
     })
 }
 
+function verifyUser(req, res, next){
+    const token = req.cookies.jwt
+
+    if(token){
+        verify(token, process.env.SECRET_KEY, (err, decodedToken) =>{
+            if(err) throw err
+            console.log(decodedToken);
+            next()
+        })
+    } else{
+        res.json('You need to login in.')
+    }
+}
+
 module.exports = {
-    createToken
+    createToken,
+    verifyUser
 }

@@ -3,10 +3,11 @@ const routes = express()
 const { products, users } = require('../model')
 const bodyParser = require('body-parser')
 const { authorize } = require('../middleware/Auth0')
+const { verifyUser } = require('../middleware/AuthUser')
 const path = require('path')
 
 // Fetch all products
-routes.get('/products', (req, res) =>{
+routes.get('/products', verifyUser, (req, res) =>{
     products.fetchProducts(req, res)
 })
 
@@ -49,7 +50,7 @@ routes.get('/user/:userID', (req, res) =>{
 })
 
 // Add user
-routes.post('/users', (req, res) =>{
+routes.post('/register', (req, res) =>{
     users.addUser(req, res)
 })
 
@@ -60,6 +61,11 @@ routes.patch('/user/:userID', (req, res) =>{
 // Delete a user
 routes.delete('/user/:userID', (req, res) =>{
     users.deleteUser(req, res)
+})
+
+// Login 
+routes.post('/login', (req, res) =>{
+    users.login(req, res)
 })
 
 module.exports ={
