@@ -1,4 +1,4 @@
-function authorize(requiredRole){
+const authorize = (requiredRole) =>{
     return (req, res, next) =>{
         const role = req.body.userRole
 
