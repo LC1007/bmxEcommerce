@@ -80,7 +80,7 @@ class Users{
 
     // Login 
 
-    login(req, res){
+    async login(req, res){
         const {emailAdd, userPass} = req.body
 
         const query = 
