@@ -18,14 +18,19 @@
     <section>
       <h1 class="headings">FEATURED PRODUCTS</h1>
       <div class="container">
-        <div class="card" v-for="bike in bmxBikes" :key="bike.bmxID">
-          <img :src="bike.prodUrl" class="card-img" alt="">
-          <div class="card-body">
-            <h4 class="card-title">{{ bike.prodName }}</h4>
-            <p class="card-text">{{ bike.prodDesc }}</p>
-            <button class="btn">View More</button>
+        <div v-if="bike">
+          <div class="card" v-for="bike in bmxBikes" :key="bike.bmxID">
+            <img :src="bike.prodUrl" class="card-img" alt="">
+            <div class="card-body">
+              <h4 class="card-title">{{ bike.prodName }}</h4>
+              <p class="card-text">{{ bike.prodDesc }}</p>
+              <button class="btn">View More</button>
+            </div>
           </div>
         </div>
+        <!-- <div v-else>
+          <p>loading...</p>
+        </div> -->
       </div>
     </section>
 
