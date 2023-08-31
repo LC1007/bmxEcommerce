@@ -7,7 +7,7 @@ const { verifyUser } = require('../middleware/AuthUser')
 const path = require('path')
 
 // Fetch all products
-routes.get('/products', verifyUser, (req, res) =>{
+routes.get('/products', (req, res) =>{
     products.fetchProducts(req, res)
 })
 
