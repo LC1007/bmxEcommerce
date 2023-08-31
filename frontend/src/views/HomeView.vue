@@ -1,7 +1,7 @@
 <template>
   <div>
     <Navbar/>
-    <section>
+    <!-- <section>
       <h1 class="headings">STORYTIME</h1>
       <div>
         <div class="container">
@@ -14,12 +14,12 @@
           </div>
         </div>
       </div>
-    </section>
-    <section>
+    </section> -->
+    <!-- <section>
       <h1 class="headings">FEATURED PRODUCTS</h1>
       <div class="container">
-        <div v-if="bike">
-          <div class="card" v-for="bike in bmxBikes" :key="bike.bmxID">
+        <div v-if="bmxBikes">
+          <div class="card" style="width: 18rem" v-for="bike in bmxBikes" :key="bike.bmxID">
             <img :src="bike.prodUrl" class="card-img" alt="">
             <div class="card-body">
               <h4 class="card-title">{{ bike.prodName }}</h4>
@@ -28,11 +28,23 @@
             </div>
           </div>
         </div>
-        <!-- <div v-else>
-          <p>loading...</p>
-        </div> -->
+        <div v-else>
+          <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+        </div>
       </div>
-    </section>
+    </section> -->
+
+    <h1>Top Picks</h1>
+    <div class="container">
+      <div class="card" v-for="bike in bmxBikes" :key="bike.bmxID">
+        <img :src="bike.prodUrl" alt="">
+        <h3 class="card-title">{{ bike.prodName }}</h3>
+        <p class="card-text">R{{ bike.amount }}</p>
+        <button class="btn" @click="selectProduct(bike)">View More</button>
+      </div>
+    </div>
 
     <section>
       <h1 class="headings">EVENTS</h1>
@@ -44,29 +56,29 @@
         <div class="left-side_event">
           <h2 class="event-heading">BMX Jam</h2>
           <img src="https://i.postimg.cc/vZrJg15Z/brandon-erlinger-ford-5IM24xEwXjs-unsplash.jpg" alt="">
-        </div> -->
-        <div class="card-event">
+        </div>  -->
+        <div class="card-event event-1">
           <img src="https://i.postimg.cc/CMmJfrpn/nicolas-picard-JjBQLWs2UPA-unsplash.jpg" class="card-img-events" alt="">
           <div class="card-body-events">
             <h4 class="card-title-events">BMX Meet Up At Cape Town</h4>
             <p class="card-text-events"></p>
           </div>
         </div>
-        <div class="card-event">
+        <div class="card-event  event-2">
           <img src="https://i.postimg.cc/vZrJg15Z/brandon-erlinger-ford-5IM24xEwXjs-unsplash.jpg" class="card-img-events" alt="">
           <div class="card-body-events">
             <h4 class="card-title-events">BMX Jam</h4>
             <p class="card-text-events"></p>
           </div>
         </div>
-        <div class="card-event">
+        <div class="card-event  event-3">
           <img src="https://i.postimg.cc/CMmJfrpn/nicolas-picard-JjBQLWs2UPA-unsplash.jpg" class="card-img-events" alt="">
           <div class="card-body-events">
             <h4 class="card-title-events">BMX Meet Up At Cape Town</h4>
             <p class="card-text-events"></p>
           </div>
         </div>
-        <div class="card-event">
+        <div class="card-event  event-4">
           <img src="https://i.postimg.cc/CMmJfrpn/nicolas-picard-JjBQLWs2UPA-unsplash.jpg" class="card-img-events" alt="">
           <div class="card-body-events">
             <h4 class="card-title-events">BMX Meet Up At Cape Town</h4>
@@ -80,18 +92,30 @@
 
 <script>
 import Navbar from '@/components/NavbarComp.vue'
+import { mapActions, mapState } from 'vuex';
 
 export default {
   components:{
     Navbar
   },
   computed:{
-    bmxBikes(){
-      return this.$store.state.bmxBikes
-    }
+    ...mapState(['bmxBikes', 'selectedProduct'])
   },
   mounted(){
-    this.$store.dispatch('fetchBikes')
+    this.fetchBikes()
+  },
+  created(){
+    const bmxID = this.$route.params.bmxID
+    this.fetchBike(bmxID)
+  },
+  methods:{
+    ...mapActions(['fetchBikes', 'fetchBike']),
+
+    selectProduct(bike){
+      this.fetchBike(bike.bmxID)
+      this.$router.push({ name: 'product', params: {bmxID: bike.bmxID} })
+      console.log(bike.prodName);
+    }
   }
 }
 
@@ -107,10 +131,17 @@ export default {
 .container{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  background-color: var(--bgColor);
   padding: 2rem;
   margin: 3rem;
   border-radius: 10px;
+}
+
+.card-text{
+  color: gray;
+}
+
+.card-title{
+  font-weight: 700;
 }
 
 .home_img{
@@ -131,7 +162,6 @@ export default {
 }
 
 .card{
-  background-color: var(--altColor);
   margin: 1rem;
   border-radius: 10px;
 }
@@ -140,6 +170,8 @@ export default {
   padding: 1rem;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 
 .card-body{
@@ -161,23 +193,46 @@ export default {
 
 .container-events{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(10, 1fr);
+  grid-template-rows: repeat(10, 1fr);
   background-color: var(--bgColor);
   margin: 5rem;
   border-radius: 10px;
+  height: 100vh;
+}
+
+.event-1{
+  grid-column: 1 / -1;
+  grid-row: 1 / 6;
+}
+
+.event-2{
+  grid-column: 1 / 6;
+  grid-row: 6 / -1;
+}
+
+.event-3{
+  grid-column: 6 / -1;
+  grid-row: 8 / -1;
+}
+
+.event-4{
+  grid-column: 6 / -1;
+  grid-row: 6 / 8;
 }
 
 .card-event{
-  background-color: var(--altColor);
   margin: 1rem;
   border-radius: 10px;
-  height: 90%;
 }
 
 .card-img-events{
-  padding: 1rem;
+  padding: .4rem;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .card-body-events{
@@ -186,11 +241,7 @@ export default {
 
 .card-title-events{
   padding-bottom: .7rem;
-}
-
-.card-img-events{
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
+  color: #fff;
 }
 
 </style>

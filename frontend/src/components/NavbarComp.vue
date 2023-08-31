@@ -25,6 +25,7 @@ import HelloWorld from '@/components/HelloWorld.vue';
           <video class="home-video" data-object-fit="cover" muted autoplay loop>
             <source src="https://player.vimeo.com/progressive_redirect/playback/684098096/rendition/540p?loc=external&signature=d7a3b70d4dabefd7e151554e9d2b1556f8d4be6fdd4c04abf24dcf27c6bb6a70" type="video/mp4">
           </video>
+          <!-- <img src="https://i.postimg.cc/hPbRMM0z/SUNDAY-2018-Primer-White-Drool-9857-Web.jpg" class="home-img" alt=""> -->
     </div>
 </template>
 
@@ -61,6 +62,12 @@ import HelloWorld from '@/components/HelloWorld.vue';
   }
 
   .home-video{
+    width: 100%;
+  }
+
+  .home-img{
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
     width: 100%;
   }
 </style>
