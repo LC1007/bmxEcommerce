@@ -1,62 +1,19 @@
 <template>
   <div>
     <Navbar/>
-    <!-- <section>
-      <h1 class="headings">STORYTIME</h1>
-      <div>
-        <div class="container">
-          <div class="right-side">
-            <p class="home_para">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Harum repellat dolores nam quia. Fugit culpa in possimus maiores, quam assumenda illo, qui numquam, autem nemo commodi! Laboriosam nihil impedit totam? Lorem ipsum, dolor sit amet consectetur adipisicing elit. Beatae, eaque.</p>
-            <p class="home_para_sec">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae eos odit magni quos illo deserunt quis sit aperiam vitae laudantium?</p>
-          </div>
-          <div class="left-side">
-            <img src="https://i.postimg.cc/Fz1vdfmP/pexels-tima-miroshnichenko-7936233.jpg" alt="" class="home_img">
-          </div>
-        </div>
-      </div>
-    </section> -->
-    <!-- <section>
-      <h1 class="headings">FEATURED PRODUCTS</h1>
-      <div class="container">
-        <div v-if="bmxBikes">
-          <div class="card" style="width: 18rem" v-for="bike in bmxBikes" :key="bike.bmxID">
-            <img :src="bike.prodUrl" class="card-img" alt="">
-            <div class="card-body">
-              <h4 class="card-title">{{ bike.prodName }}</h4>
-              <p class="card-text">{{ bike.prodDesc }}</p>
-              <button class="btn">View More</button>
-            </div>
-          </div>
-        </div>
-        <div v-else>
-          <div class="spinner-border" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      </div>
-    </section> -->
-
     <h1>Top Picks</h1>
     <div class="container">
-      <div class="card" v-for="bike in bmxBikes" :key="bike.bmxID">
+      <div class="card" v-for="bike in bikes" :key="bike.bmxID">
         <img :src="bike.prodUrl" alt="">
         <h3 class="card-title">{{ bike.prodName }}</h3>
         <p class="card-text">R{{ bike.amount }}</p>
-        <button class="btn" @click="selectProduct(bike)">View More</button>
+        <router-link :to="'/product/' + bike.bmxID">View more</router-link>
       </div>
     </div>
 
     <section>
       <h1 class="headings">EVENTS</h1>
       <div class="container-events">
-        <!-- <div class="right-side_event">
-          <h2 class="event-heading">BMX Meet Up At Cape Town</h2>
-          <img src="https://i.postimg.cc/CMmJfrpn/nicolas-picard-JjBQLWs2UPA-unsplash.jpg" alt="">
-        </div>
-        <div class="left-side_event">
-          <h2 class="event-heading">BMX Jam</h2>
-          <img src="https://i.postimg.cc/vZrJg15Z/brandon-erlinger-ford-5IM24xEwXjs-unsplash.jpg" alt="">
-        </div>  -->
         <div class="card-event event-1">
           <img src="https://i.postimg.cc/CMmJfrpn/nicolas-picard-JjBQLWs2UPA-unsplash.jpg" class="card-img-events" alt="">
           <div class="card-body-events">
@@ -92,30 +49,22 @@
 
 <script>
 import Navbar from '@/components/NavbarComp.vue'
-import { mapActions, mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex'
+
 
 export default {
   components:{
     Navbar
   },
+  // Line 103 is fetching the data from the state
   computed:{
-    ...mapState(['bmxBikes', 'selectedProduct'])
+    ...mapState(['bikes','selectedBike'])
   },
   mounted(){
     this.fetchBikes()
   },
-  created(){
-    const bmxID = this.$route.params.bmxID
-    this.fetchBike(bmxID)
-  },
   methods:{
     ...mapActions(['fetchBikes', 'fetchBike']),
-
-    selectProduct(bike){
-      this.fetchBike(bike.bmxID)
-      this.$router.push({ name: 'product', params: {bmxID: bike.bmxID} })
-      console.log(bike.prodName);
-    }
   }
 }
 

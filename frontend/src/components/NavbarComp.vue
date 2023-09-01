@@ -16,6 +16,9 @@ import HelloWorld from '@/components/HelloWorld.vue';
                   <li>
                     <router-link to="/signup">Signin</router-link>
                   </li>
+                  <li>
+                    <router-link to="/admin">Admin(DELETE LATER)</router-link>
+                  </li>
                 </ul>
                 <div class="icons">
                   <router-link to="/login"><i class="bi bi-person-circle"></i></router-link>

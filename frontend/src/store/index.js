@@ -5,15 +5,12 @@ const url = 'https://bmxworld.onrender.com/'
 
 export default createStore({
   state: {
-    bmxBikes: [],
-    selectedBike: []
-  },
-  getters: {
-    getProduct: state => state.selectedBike
+    bikes: [],
+    selectedBike: null
   },
   mutations: {
-    setBike(state, bikes){
-      state.bmxBikes = bikes
+    setBikes(state, bikes){
+      state.bikes = bikes
     },
     setSelectedBike(state, bike){
       state.selectedBike = bike
@@ -21,8 +18,8 @@ export default createStore({
   },
   actions: {
     async fetchBikes({commit}){
-      const response = await axios.get(`${url}products`)
-      commit('setBike', response.data.results)
+      const {data} = await axios.get(`${url}products`)
+      commit('setBikes', data.results)
     },
 
     async fetchBike({commit}, bmxID){

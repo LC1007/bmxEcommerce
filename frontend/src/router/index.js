@@ -33,7 +33,12 @@ const routes = [
   {
     path: '/product/:bmxID',
     name: 'product',
-    component: ()=> import('../components/SingleProdComp.vue')
+    component: ()=> import('../views/SingleProdView.vue')
+  },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: ()=> import('../views/AdminView.vue')
   }
 ]
 

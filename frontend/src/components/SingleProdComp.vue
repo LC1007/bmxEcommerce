@@ -13,11 +13,7 @@
 import { mapActions, mapState } from 'vuex'
     export default {
         computed:{
-            ...mapState(['selectedProduct'])
-        },
-        created(){
-            const bmxID = this.$route.params.bmxID
-            this.fetchBike(bmxID)
+            ...mapState(['selectedBike'])
         },
         methods:{
             ...mapActions(['fetchBike'])

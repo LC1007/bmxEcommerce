@@ -175,8 +175,14 @@ input[type='password']{
 .container{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    margin: 5rem;
+    margin: 1.5rem;
     background-color: var(--bgColor);
+}
+
+.home-video{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .right-side{
@@ -218,11 +224,5 @@ input[type='password']{
     background-color: var(--altColor);
     color: #000;
     margin-top: .5rem;
-}
-
-.home-video{
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    width: 100%;
 }
 </style>
