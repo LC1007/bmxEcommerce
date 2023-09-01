@@ -19,3 +19,17 @@ img{
     display: block;
     max-width: 100%;
 }
+
+.heading{
+    text-align: center;
+    margin: 3rem;
+    text-transform: uppercase;
+}
+
+.custom-container{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    padding: 2rem;
+    margin: 3rem;
+    border-radius: 10px;
+}
